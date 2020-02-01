@@ -1,12 +1,32 @@
 
+ggplot_aes_list_to_encoding = (branch) => {
+    
+    // combine mapping items into one 'encoding'
+    // backwards, because this is how it would work in the
+    // actual aes() function in R if a user specified more
+    // than one mapping for (e.g., color)
+    const mappingItems = JSON.parse(`[ ${branch.replace(/,\s*$/, '')} ]`)
+    const encoding = {}
+    for (var i = (mappingItems.length - 1); i >=0; i--) {
+        const item = mappingItems[i]
+        encoding[item.aesthetic] = {
+            _tbId: item._tbId,
+            field: item.column,
+            type: 'quantitative'
+        }
+    }
+
+    return encoding
+}
+
 //
 // Create a ggplot.
 //
 Blockly.JavaScript['ggplot_plot'] = (block) => {
-    const branch = Blockly.JavaScript.statementToCode(block, "LAYERS")
+    const branchLayers = Blockly.JavaScript.statementToCode(block, "LAYERS")
           .replace(/\]\[/g, '], [')
 
-    const layers = JSON.parse(`[ ${branch.replace(/,\s*$/, '')} ]`)
+    const layers = JSON.parse(`[ ${branchLayers.replace(/,\s*$/, '')} ]`)
     const spec = {data: {values: null}, layer: layers}
 
     const suffix = TbManager.registerSuffix('')
@@ -19,23 +39,10 @@ Blockly.JavaScript['ggplot_plot'] = (block) => {
 Blockly.JavaScript['ggplot_geom_point'] = (block) => {
     const branch = Blockly.JavaScript.statementToCode(block, "MAPPING")
           .replace(/\]\[/g, '], [')
-    
-    // combine mapping items into one 'encoding'
-    // backwards, because this is how it would work in the
-    // actual aes() function in R if a user specified more
-    // than one mapping (e.g., color)
-    const mappingItems = eval(`[ ${branch} ]`);
-    const encoding = {}
-    for (var i = (mappingItems.length - 1); i >=0; i--) {
-        const item = mappingItems[i]
-        encoding[item.aesthetic] = {
-            _tbId: item._tbId,
-            field: item.column,
-            type: 'quantitative'
-        }
-    }
 
-    // generate the vega lite spec
+    const encoding = ggplot_aes_list_to_encoding(branch)
+    
+    // generate the vega lite single view spec
     const spec = {
         '_tbId': block.tbId,
         'mark': 'point',
@@ -52,20 +59,7 @@ Blockly.JavaScript['ggplot_geom_smooth'] = (block) => {
     const branch = Blockly.JavaScript.statementToCode(block, "MAPPING")
           .replace(/\]\[/g, '], [')
     
-    // combine mapping items into one 'encoding'
-    // backwards, because this is how it would work in the
-    // actual aes() function in R if a user specified more
-    // than one mapping (e.g., color)
-    const mappingItems = eval(`[ ${branch} ]`);
-    const encoding = {}
-    for (var i = (mappingItems.length - 1); i >=0; i--) {
-        const item = mappingItems[i]
-        encoding[item.aesthetic] = {
-            _tbId: item._tbId,
-            field: item.column,
-            type: 'quantitative'
-        }
-    }
+    const encoding = ggplot_aes_list_to_encoding(branch)
 
     // generate the vega lite spec
     const spec = {
@@ -91,12 +85,14 @@ Blockly.JavaScript['ggplot_geom_smooth'] = (block) => {
 // Map columns to aesthetics.
 //
 Blockly.JavaScript['ggplot_mapping'] = (block) => {
-    const aesthetic = Blockly.JavaScript.quote_(block.getFieldValue('AESTHETIC'))
-    const column = Blockly.JavaScript.quote_(block.getFieldValue('COLUMN'))
+    const aesthetic = block.getFieldValue('AESTHETIC')
+    const column = block.getFieldValue('COLUMN')
 
-    return `{
-        '_tbId': ${block.tbId},
-        aesthetic: ${aesthetic},
-        column: ${column}
-    },`
+    const mappingItem = {
+        '_tbId': block.tbId,
+        'aesthetic': aesthetic,
+        'column': column
+    }
+
+    return `${JSON.stringify(mappingItem)}, `
   }
