@@ -114,6 +114,11 @@
               <block type="stats_t_test_paired"></block>
               <block type="stats_anova"></block>
             </category>
+            <category name="ggplot" categorystyle="statistics">
+              <block type="ggplot_plot"></block>
+              <block type="ggplot_geom_point"></block>
+              <block type="ggplot_mapping"></block>
+            </category>
           </xml>
         </div>
       </div>
@@ -181,6 +186,7 @@
       <script src="blocks/transform.js"></script>
       <script src="blocks/transform_summarize_item.js"></script>
       <script src="blocks/value.js"></script>
+      <script src="blocks/ggplot.js"></script>
 
       <!-- TidyBlocks code generators -->
       <script src="generators/data.js"></script>
@@ -191,6 +197,8 @@
       <script src="generators/transform.js"></script>
       <script src="generators/transform_summarize_item.js"></script>
       <script src="generators/value.js"></script>
+      <script src="generators/ggplot.js"></script>
+
     </div>
 
     <!-- TidyBlocks GUI (outside the #tidyblocks div so that tests won't try to load it) -->
