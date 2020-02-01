@@ -14,7 +14,7 @@ Blockly.JavaScript['ggplot_plot'] = (block) => {
   }
 
 //
-// Create a single-layer ggplot.
+// Create a point geometry layer.
 //
 Blockly.JavaScript['ggplot_geom_point'] = (block) => {
     const branch = Blockly.JavaScript.statementToCode(block, "MAPPING")
@@ -39,6 +39,48 @@ Blockly.JavaScript['ggplot_geom_point'] = (block) => {
     const spec = {
         '_tbId': block.tbId,
         'mark': 'point',
+        'encoding': encoding
+      }
+
+    return `${JSON.stringify(spec)} ,`
+  }
+
+//
+// Create a smooth geometry layer.
+//
+Blockly.JavaScript['ggplot_geom_smooth'] = (block) => {
+    const branch = Blockly.JavaScript.statementToCode(block, "MAPPING")
+          .replace(/\]\[/g, '], [')
+    
+    // combine mapping items into one 'encoding'
+    // backwards, because this is how it would work in the
+    // actual aes() function in R if a user specified more
+    // than one mapping (e.g., color)
+    const mappingItems = eval(`[ ${branch} ]`);
+    const encoding = {}
+    for (var i = (mappingItems.length - 1); i >=0; i--) {
+        const item = mappingItems[i]
+        encoding[item.aesthetic] = {
+            _tbId: item._tbId,
+            field: item.column,
+            type: 'quantitative'
+        }
+    }
+
+    // generate the vega lite spec
+    const spec = {
+        '_tbId': block.tbId,
+        'mark': {
+            "type": "line",
+            "color": "firebrick"
+        },
+        "transform": [
+            {
+              "regression": encoding.y.field,
+              "on": encoding.x.field,
+              "method": "linear"
+            }
+        ],
         'encoding': encoding
       }
 

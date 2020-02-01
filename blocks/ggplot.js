@@ -19,7 +19,7 @@ Blockly.defineBlocksWithJsonArray([
     }
   ])
 
-// Visuals for parent ggplot2 layer block.
+// Visuals for the geom_point block.
 //
 Blockly.defineBlocksWithJsonArray([
     {
@@ -35,7 +35,28 @@ Blockly.defineBlocksWithJsonArray([
       previousStatement: null,
       nextStatement: null,
       style: "transform_blocks",
-      tooltip: "create a ggplot layer",
+      tooltip: "create a point geometry layer",
+      helpUrl: ""
+    }
+  ])
+
+// Visuals for the geom_smooth block.
+//
+Blockly.defineBlocksWithJsonArray([
+    {
+      "type": "ggplot_geom_smooth",
+      "message0": "geom_smooth %1",
+      "args0": [
+        {
+            "type": "input_statement",
+            "name": "MAPPING"
+        }
+      ],
+      inputsInline: true,
+      previousStatement: null,
+      nextStatement: null,
+      style: "transform_blocks",
+      tooltip: "create a smooth geometry layer",
       helpUrl: ""
     }
   ])
