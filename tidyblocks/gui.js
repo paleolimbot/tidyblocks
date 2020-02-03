@@ -52,6 +52,7 @@ class GuiEnvironment {
    * @returns {string} The code to run.
    */
   getCode () {
+    Blockly.JavaScript.STATEMENT_PREFIX = ', '
     return Blockly.JavaScript.workspaceToCode(TidyBlocksWorkspace)
   }
 

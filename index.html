@@ -47,78 +47,10 @@
         <div id="blockDisplay">
           <xml id="toolbox">
             <category name="data" categorystyle="data">
-              <block type="data_colors"></block>
-              <block type="data_earthquakes"></block>
               <block type="data_iris"></block>
-              <block type="data_mtcars"></block>
-              <block type="data_toothGrowth"></block>
-              <block type="data_urlCSV"></block>
-              <block type="data_local"></block>
-              <block type="data_sequence"></block>
             </category>
             <category name="transform" categorystyle="transform">
               <block type="transform_drop"></block>
-              <block type="transform_filter"></block>
-              <block type="transform_groupBy"></block>
-              <block type="transform_mutate"></block>
-              <block type="transform_select"></block>
-              <block type="transform_sort"></block>
-              <block type="transform_summarize">
-                <statement name="COLUMN_FUNC_PAIR">
-                  <block type="transform_summarize_item"></block>
-                </statement>
-              </block>
-              <block type="transform_summarize_item"></block>
-              <block type="transform_ungroup"></block>
-              <block type="transform_unique"></block>
-            </category>
-            <category name="plot" categorystyle="plot">
-              <block type="plot_bar"></block>
-              <block type="plot_box"></block>
-              <block type="plot_hist"></block>
-              <block type="plot_dot"></block>
-              <block type="plot_point"></block>
-            </category>
-            <category name="operation" categorystyle="operation">
-              <block type="operation_arithmetic"></block>
-              <block type="operation_compare"></block>
-              <block type="operation_convert"></block>
-              <block type="operation_convert_datetime"></block>
-              <block type="operation_ifElse"></block>
-              <block type="operation_logical"></block>
-              <block type="operation_negate"></block>
-              <block type="operation_not"></block>
-              <block type="operation_type"></block>
-            </category>
-            <category name="value" categorystyle="value">
-              <block type="value_boolean"></block>
-              <block type="value_column"></block>
-              <block type="value_datetime"></block>
-              <block type="value_number"></block>
-              <block type="value_text"></block>
-              <block type="value_rownum"></block>
-              <block type="value_uniform"></block>
-              <block type="value_normal"></block>
-              <block type="value_exponential"></block>
-            </category>
-            <category name="combine" categorystyle="combine">
-              <block type="combine_notify"></block>
-              <block type="combine_join"></block>
-              <block type="combine_concatenate"></block>
-            </category>
-            <category name="statistics" categorystyle="statistics">
-              <block type="stats_z_test_one_sample"></block>
-              <block type="stats_kruskal_wallis"></block>
-              <block type="stats_kolmogorov_smirnov"></block>
-              <block type="stats_t_test_one_sample"></block>
-              <block type="stats_t_test_paired"></block>
-              <block type="stats_anova"></block>
-            </category>
-            <category name="ggplot" categorystyle="statistics">
-              <block type="ggplot_plot"></block>
-              <block type="ggplot_geom_point"></block>
-              <block type="ggplot_geom_smooth"></block>
-              <block type="ggplot_mapping"></block>
             </category>
           </xml>
         </div>
@@ -179,26 +111,7 @@
       <script src="tidyblocks/themes.js"></script>
 
       <!-- TidyBlocks blocks -->
-      <script src="blocks/data.js"></script>
-      <script src="blocks/operation.js"></script>
-      <script src="blocks/plot.js"></script>
-      <script src="blocks/combine.js"></script>
-      <script src="blocks/stats.js"></script>
-      <script src="blocks/transform.js"></script>
-      <script src="blocks/transform_summarize_item.js"></script>
-      <script src="blocks/value.js"></script>
-      <script src="blocks/ggplot.js"></script>
-
-      <!-- TidyBlocks code generators -->
-      <script src="generators/data.js"></script>
-      <script src="generators/operation.js"></script>
-      <script src="generators/plot.js"></script>
-      <script src="generators/combine.js"></script>
-      <script src="generators/stats.js"></script>
-      <script src="generators/transform.js"></script>
-      <script src="generators/transform_summarize_item.js"></script>
-      <script src="generators/value.js"></script>
-      <script src="generators/ggplot.js"></script>
+      <script src="tidyblocks/blockdefs.js"></script>
 
     </div>
 

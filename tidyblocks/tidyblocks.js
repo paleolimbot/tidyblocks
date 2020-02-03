@@ -606,17 +606,19 @@ class TidyBlocksManager {
     environment.displayError('') // clear legacy errors
     try {
       let code = environment.getCode()
-      if (! code.includes(this.start)) {
-        throw new Error('pipeline does not have a valid start block')
-      }
-      code = this.fixCode(code)
-      eval(code)
-      while (this.queue.length > 0) {
-        const func = this.queue.shift()
-        func()
+      let objects = JSON.parse(`[${code.replace(/^\s*,\s*/, '')}]`)
+      let tree = new SyntaxTree(blockLibrary, objects)
+      let result = tree.evaluate(0, environment)
+
+      if (result instanceof TbDataFrame) {
+        environment.displayFrame(result)
+      } else {
+        console.log('dont know how to show result')
+        console.log(result)
       }
     }
     catch (err) {
+      console.log(err)
       environment.displayError(err.message)
     }
   }
@@ -644,10 +646,6 @@ class TidyBlocksManager {
    * @param {string} code Pipeline code to be terminated if necessary.
    */
   fixCode (code) {
-    if (! code.endsWith(this.end)) {
-      const suffix = this.registerSuffix('')
-      code += `.plot(-1, environment, {}) ${suffix}`
-    }
     return code
   }
 
